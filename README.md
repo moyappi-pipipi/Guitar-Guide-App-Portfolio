@@ -85,7 +85,12 @@ docker compose -f .devcontainer/docker-compose.yml exec app bash .devcontainer/p
 - `GET /api/openapi.yaml`
 - `GET /api/openapi.json`
 
-## デモユーザー
+## テスト
 
-- email: `demo@example.com`
-- password: `password`
+```bash
+# Backend (Laravel / PHPUnit)
+cd backend && php artisan test
+
+# Frontend (Vitest)
+cd frontend && npm test
+```
