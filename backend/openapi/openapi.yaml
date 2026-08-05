@@ -1,0 +1,437 @@
+openapi: 3.0.0
+info:
+  title: 'Guitar Guide API'
+  description: '弾き語りスタートガイド向け REST API'
+  version: 1.0.0
+servers:
+  -
+    url: 'http://localhost:8000/api'
+    description: 'Local development'
+paths:
+  /articles:
+    get:
+      tags:
+        - Articles
+      summary: 記事一覧
+      operationId: listArticles
+      parameters:
+        -
+          name: category
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - beginner
+              - guitar
+              - gear
+              - news
+        -
+          name: featured
+          in: query
+          required: false
+          schema:
+            type: boolean
+        -
+          name: q
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                properties:
+                  data: { type: array, items: { $ref: '#/components/schemas/Article' } }
+                type: object
+  '/articles/{slug}':
+    get:
+      tags:
+        - Articles
+      summary: 記事詳細
+      operationId: getArticle
+      parameters:
+        -
+          name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                properties:
+                  data: { $ref: '#/components/schemas/Article' }
+                type: object
+        '404':
+          description: 'Not Found'
+  /guitars:
+    get:
+      tags:
+        - Guitars
+      summary: ギター一覧
+      operationId: listGuitars
+      parameters:
+        -
+          name: level
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - beginner
+              - intermediate
+              - advanced
+        -
+          name: body_type
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - dreadnought
+              - concert
+              - mini
+              - classical
+        -
+          name: recommended
+          in: query
+          required: false
+          schema:
+            type: boolean
+        -
+          name: q
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                properties:
+                  data: { type: array, items: { $ref: '#/components/schemas/Guitar' } }
+                type: object
+  '/guitars/{id}':
+    get:
+      tags:
+        - Guitars
+      summary: ギター詳細
+      operationId: getGuitar
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                properties:
+                  data: { $ref: '#/components/schemas/Guitar' }
+                type: object
+        '404':
+          description: 'Not Found'
+  /guitar-items:
+    get:
+      tags:
+        - GuitarItems
+      summary: ギターアイテム一覧
+      operationId: listGuitarItems
+      parameters:
+        -
+          name: category
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - pick
+              - capo
+              - tuner
+              - string
+              - strap
+        -
+          name: recommended
+          in: query
+          required: false
+          schema:
+            type: boolean
+        -
+          name: q
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                properties:
+                  data: { type: array, items: { $ref: '#/components/schemas/GuitarItem' } }
+                type: object
+  '/guitar-items/{id}':
+    get:
+      tags:
+        - GuitarItems
+      summary: ギターアイテム詳細
+      operationId: getGuitarItem
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                properties:
+                  data: { $ref: '#/components/schemas/GuitarItem' }
+                type: object
+        '404':
+          description: 'Not Found'
+  /search:
+    get:
+      tags:
+        - Search
+      summary: 記事・ギター・アイテム横断検索
+      operationId: searchAll
+      parameters:
+        -
+          name: q
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                properties:
+                  data: { $ref: '#/components/schemas/SearchResult' }
+                type: object
+components:
+  schemas:
+    Article:
+      required:
+        - id
+        - title
+        - slug
+        - category
+        - excerpt
+        - body
+        - is_featured
+      properties:
+        id:
+          type: integer
+          example: 1
+        title:
+          type: string
+          example: 初心者におすすめのアコースティックギター
+        slug:
+          type: string
+          example: recommended-acoustic-guitars
+        category:
+          type: string
+          example: guitar
+          enum:
+            - beginner
+            - guitar
+            - gear
+            - news
+        excerpt:
+          type: string
+        body:
+          type: string
+        thumbnail_url:
+          type: string
+          nullable: true
+        is_featured:
+          type: boolean
+          example: true
+        published_at:
+          type: string
+          format: date-time
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          nullable: true
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+      type: object
+    GuitarItem:
+      required:
+        - id
+        - name
+        - brand
+        - category
+        - price
+        - description
+        - is_recommended
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: 'Tortex Standard 0.73mm'
+        brand:
+          type: string
+          example: Dunlop
+        category:
+          type: string
+          example: pick
+          enum:
+            - pick
+            - capo
+            - tuner
+            - string
+            - strap
+        price:
+          type: integer
+          example: 120
+        specs:
+          type: string
+          example: '0.73mm / Tortex'
+          nullable: true
+        description:
+          type: string
+        image_url:
+          type: string
+          nullable: true
+        is_recommended:
+          type: boolean
+          example: true
+        created_at:
+          type: string
+          format: date-time
+          nullable: true
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+      type: object
+    Guitar:
+      required:
+        - id
+        - name
+        - brand
+        - price
+        - body_type
+        - level
+        - description
+        - is_recommended
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: FS820
+        brand:
+          type: string
+          example: YAMAHA
+        price:
+          type: integer
+          example: 38500
+        body_type:
+          type: string
+          example: concert
+          enum:
+            - dreadnought
+            - concert
+            - mini
+            - classical
+        level:
+          type: string
+          example: beginner
+          enum:
+            - beginner
+            - intermediate
+            - advanced
+        description:
+          type: string
+        image_url:
+          type: string
+          nullable: true
+        is_recommended:
+          type: boolean
+          example: true
+        created_at:
+          type: string
+          format: date-time
+          nullable: true
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+      type: object
+    SearchResult:
+      required:
+        - articles
+        - guitars
+        - guitar_items
+      properties:
+        articles:
+          type: array
+          items:
+            $ref: '#/components/schemas/Article'
+        guitars:
+          type: array
+          items:
+            $ref: '#/components/schemas/Guitar'
+        guitar_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/GuitarItem'
+      type: object
+tags:
+  -
+    name: Articles
+    description: 記事
+  -
+    name: Guitars
+    description: ギター商品
+  -
+    name: GuitarItems
+    description: ギターアイテム
+  -
+    name: Search
+    description: 横断検索
