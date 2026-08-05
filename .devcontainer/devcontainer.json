@@ -1,0 +1,28 @@
+{
+  "name": "Guitar Guide App",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
+  "shutdownAction": "stopCompose",
+  "forwardPorts": [5173, 8000, 3306],
+  "portsAttributes": {
+    "5173": { "label": "Frontend (Vite)", "onAutoForward": "notify" },
+    "8000": { "label": "Backend (Laravel)", "onAutoForward": "notify" },
+    "3306": { "label": "MySQL", "onAutoForward": "silent" }
+  },
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "bmewburn.vscode-intelephense-client",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "bradlc.vscode-tailwindcss"
+      ],
+      "settings": {
+        "editor.formatOnSave": true
+      }
+    }
+  },
+  "remoteUser": "vscode"
+}
