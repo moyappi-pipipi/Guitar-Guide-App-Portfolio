@@ -1,0 +1,128 @@
+.hero {
+  position: relative;
+  min-height: min(72vh, 560px);
+  border-radius: 1.5rem;
+  overflow: hidden;
+  margin-bottom: 2.5rem;
+  background:
+    linear-gradient(120deg, rgba(15, 44, 36, 0.78), rgba(15, 44, 36, 0.35)),
+    url('https://images.unsplash.com/photo-1510915361894-db8b60106cb1?auto=format&fit=crop&w=1600&q=80')
+      center / cover no-repeat;
+  color: #f4fff9;
+  display: grid;
+  align-items: end;
+  animation: fade-up 0.7s ease both;
+}
+
+.hero-copy {
+  padding: clamp(1.5rem, 5vw, 3rem);
+  max-width: 38rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.6rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  opacity: 0.9;
+}
+
+.hero h1 {
+  margin: 0 0 0.8rem;
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 8vw, 4.2rem);
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+}
+
+.lede {
+  margin: 0 0 1.4rem;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  opacity: 0.95;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.15rem;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 700;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn.primary {
+  background: #e8fff4;
+  color: #0f2c24;
+}
+
+.btn.ghost {
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  color: #f4fff9;
+}
+
+.section {
+  margin-bottom: 3rem;
+  animation: fade-up 0.7s ease both;
+  animation-delay: 0.08s;
+}
+
+.section-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.1rem;
+}
+
+.section-head h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 3vw, 1.85rem);
+}
+
+.section-head a {
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.status {
+  padding: 1rem 0 2rem;
+  color: var(--muted);
+}
+
+.status.error {
+  color: #9b2c2c;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    min-height: 68vh;
+    border-radius: 1rem;
+  }
+}

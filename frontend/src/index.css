@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Syne:wght@600;700;800&display=swap');
+
+:root {
+  --bg: #f3f7f5;
+  --bg-soft: #e7efeb;
+  --surface: #ffffff;
+  --ink: #14201c;
+  --muted: #5d6f68;
+  --accent: #2a6b55;
+  --line: #d3ddd8;
+  --font-display: 'Syne', 'Noto Sans JP', sans-serif;
+  --font-body: 'Noto Sans JP', sans-serif;
+  font-family: var(--font-body);
+  line-height: 1.6;
+  font-weight: 400;
+  color: var(--ink);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background:
+    radial-gradient(circle at top left, rgba(42, 107, 85, 0.08), transparent 35%),
+    linear-gradient(180deg, #f7fbf9 0%, var(--bg) 40%);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+a {
+  color: var(--accent);
+}
